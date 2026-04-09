@@ -27,12 +27,22 @@ export function SubscriptionButton({ isPro = false }: SubscriptionButtonProps) {
 
   return (
     <Button
-      variant={isPro ? "default" : "premium"}
       disabled={loading}
       onClick={onClick}
+      className={
+        isPro
+          ? "border border-white/20 bg-white/5 hover:bg-white/10 text-white"
+          : "bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white border-0 shadow-lg shadow-violet-500/25"
+      }
     >
-      {isPro ? "Manage Subscription" : "Upgrade to Pro"}
-      {!isPro && <Zap className="w-4 h-4 ml-2 fill-white" />}
+      {isPro ? (
+        "Manage subscription"
+      ) : (
+        <>
+          <Zap className="w-4 h-4 mr-2 fill-white" />
+          Upgrade to Pro · $20/month
+        </>
+      )}
     </Button>
   );
 }

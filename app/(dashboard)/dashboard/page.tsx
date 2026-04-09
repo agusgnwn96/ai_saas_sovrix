@@ -2,34 +2,51 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { tools } from "@/lib/constants";
-import { Card } from "@/components/ui/card";
 
 export default function DashboardPage() {
   return (
-    <div>
-      <div className="mb-8 space-y-4">
-        <h2 className="text-2xl md:text-4xl font-bold text-center">
-          Explore the power of AI
+    <div className="px-4 lg:px-8 py-8">
+      {/* Header */}
+      <div className="mb-10">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2 tracking-tight">
+          What will you{" "}
+          <span className="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">
+            create today?
+          </span>
         </h2>
-        <p className="text-muted-foreground font-light text-sm md:text-lg text-center">
-          Chat with the smartest AI — Experience the power of AI with Sovrix
+        <p className="text-zinc-400 text-sm">
+          Choose a tool below to start generating.
         </p>
       </div>
-      <div className="px-4 md:px-20 lg:px-32 space-y-4">
-        {tools.map((tool) => (
+
+      {/* Tool grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        {tools.map((tool, i) => (
           <Link key={tool.href} href={tool.href}>
-            <Card className="p-4 border-black/5 flex items-center justify-between hover:shadow-md transition cursor-pointer mb-3">
-              <div className="flex items-center gap-x-4">
-                <div className={cn("p-2 w-fit rounded-md", tool.bgColor)}>
-                  <tool.icon className={cn("w-8 h-8", tool.color)} />
+            <div className={cn(
+              "group relative rounded-2xl border border-white/8 bg-white/3 p-6",
+              "hover:border-white/20 hover:bg-white/5 hover:-translate-y-0.5",
+              "transition-all duration-200 cursor-pointer overflow-hidden",
+              i === 0 && "md:col-span-2 xl:col-span-1"
+            )}>
+              {/* Subtle gradient glow on hover */}
+              <div className={cn(
+                "absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none",
+                tool.bgColor
+              )} style={{ filter: "blur(40px)", transform: "scale(0.8)" }} />
+
+              <div className="relative flex items-start justify-between mb-4">
+                <div className={cn("w-11 h-11 rounded-xl flex items-center justify-center", tool.bgColor)}>
+                  <tool.icon className={cn("w-5 h-5", tool.color)} />
                 </div>
-                <div>
-                  <p className="font-semibold">{tool.label}</p>
-                  <p className="text-sm text-muted-foreground">{tool.description}</p>
+                <div className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowRight className="w-3.5 h-3.5 text-white" />
                 </div>
               </div>
-              <ArrowRight className="w-5 h-5" />
-            </Card>
+
+              <h3 className="text-white font-semibold text-base mb-1.5">{tool.label}</h3>
+              <p className="text-zinc-500 text-sm leading-relaxed">{tool.description}</p>
+            </div>
           </Link>
         ))}
       </div>

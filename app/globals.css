@@ -50,10 +50,59 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
   }
-  body {
-    @apply bg-background text-foreground;
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-sm border border-white/8 rounded-2xl;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent;
+  }
+  .gradient-border {
+    background: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(99,102,241,0.3));
+    border: 1px solid transparent;
+    background-clip: padding-box;
   }
 }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(139,92,246,0.3); }
+  50%       { box-shadow: 0 0 40px rgba(139,92,246,0.6); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.animate-float       { animation: float 4s ease-in-out infinite; }
+.animate-fade-up     { animation: fade-up 0.6s ease-out forwards; }
+.animate-shimmer     { animation: shimmer 3s linear infinite; }
+.animate-pulse-glow  { animation: pulse-glow 2s ease-in-out infinite; }
+.animate-spin-slow   { animation: spin-slow 8s linear infinite; }
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }

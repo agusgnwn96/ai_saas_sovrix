@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Sparkles } from "lucide-react";
 
 interface EmptyProps {
   label: string;
@@ -6,13 +6,14 @@ interface EmptyProps {
 
 export function Empty({ label }: EmptyProps) {
   return (
-    <div className="h-full p-20 flex flex-col items-center justify-center">
-      <div className="relative h-72 w-72">
-        <div className="flex items-center justify-center w-72 h-72 rounded-full bg-gradient-to-br from-violet-500/20 to-indigo-500/20">
-          <div className="text-6xl">🤖</div>
+    <div className="h-full flex flex-col items-center justify-center py-20 gap-4">
+      <div className="relative">
+        <div className="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+          <Sparkles className="w-8 h-8 text-zinc-600" />
         </div>
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-500/10 to-indigo-500/10 blur-xl -z-10" />
       </div>
-      <p className="text-muted-foreground text-sm text-center">{label}</p>
+      <p className="text-zinc-500 text-sm text-center max-w-xs">{label}</p>
     </div>
   );
 }

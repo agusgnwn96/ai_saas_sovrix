@@ -5,7 +5,6 @@ import { Zap } from "lucide-react";
 import { MAX_FREE_COUNTS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Card, CardContent } from "@/components/ui/card";
 import { useProModal } from "@/hooks/use-pro-modal";
 
 interface FreeCounterProps {
@@ -17,35 +16,29 @@ export function FreeCounter({ apiLimitCount = 0, isPro = false }: FreeCounterPro
   const proModal = useProModal();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => { setMounted(true); }, []);
 
   if (!mounted || isPro) return null;
 
+  const pct = (apiLimitCount / MAX_FREE_COUNTS) * 100;
+
   return (
-    <div className="px-3">
-      <Card className="bg-white/10 border-0">
-        <CardContent className="py-6">
-          <div className="text-center text-sm text-white mb-4 space-y-2">
-            <p>
-              {apiLimitCount} / {MAX_FREE_COUNTS} Free Generations
-            </p>
-            <Progress
-              className="h-3"
-              value={(apiLimitCount / MAX_FREE_COUNTS) * 100}
-            />
-          </div>
-          <Button
-            onClick={proModal.onOpen}
-            variant="premium"
-            className="w-full"
-          >
-            Upgrade to Pro
-            <Zap className="w-4 h-4 ml-2 fill-white" />
-          </Button>
-        </CardContent>
-      </Card>
+    <div className="rounded-xl border border-white/8 bg-white/3 p-4">
+      <div className="flex items-center justify-between text-xs text-zinc-400 mb-2">
+        <span>Free generations</span>
+        <span className="font-medium text-white">{apiLimitCount} / {MAX_FREE_COUNTS}</span>
+      </div>
+      <Progress
+        value={pct}
+        className="h-1.5 bg-white/10 mb-3"
+      />
+      <Button
+        onClick={proModal.onOpen}
+        className="w-full h-8 text-xs bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white border-0 shadow-md shadow-violet-500/20"
+      >
+        <Zap className="w-3 h-3 mr-1.5 fill-white" />
+        Upgrade to Pro
+      </Button>
     </div>
   );
 }
