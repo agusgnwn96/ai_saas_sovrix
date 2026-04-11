@@ -19,8 +19,7 @@ export async function POST(req: Request) {
     if (!amount) return new NextResponse("Amount is required", { status: 400 });
     if (!resolution) return new NextResponse("Resolution is required", { status: 400 });
 
-    const freeTrial = await checkApiLimit();
-    const isPro = await checkSubscription();
+    const [freeTrial, isPro] = await Promise.all([checkApiLimit(), checkSubscription()]);
 
     if (!freeTrial && !isPro) {
       return new NextResponse("Free trial has expired.", { status: 403 });

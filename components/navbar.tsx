@@ -4,8 +4,7 @@ import { getApiLimitCount } from "@/lib/api-limit";
 import { checkSubscription } from "@/lib/subscription";
 
 export async function Navbar() {
-  const apiLimitCount = await getApiLimitCount();
-  const isPro = await checkSubscription();
+  const [apiLimitCount, isPro] = await Promise.all([getApiLimitCount(), checkSubscription()]);
 
   return (
     <div className="flex items-center px-4 py-3 border-b border-white/5 bg-[#0a0a0f]/80 backdrop-blur-sm sticky top-0 z-40">

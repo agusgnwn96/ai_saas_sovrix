@@ -8,8 +8,7 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const apiLimitCount = await getApiLimitCount();
-  const isPro = await checkSubscription();
+  const [apiLimitCount, isPro] = await Promise.all([getApiLimitCount(), checkSubscription()]);
 
   return (
     <div className="h-full relative bg-[#0a0a0f]">

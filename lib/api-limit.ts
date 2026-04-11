@@ -6,16 +6,11 @@ export const incrementApiLimit = async () => {
   const { userId } = await auth();
   if (!userId) return;
 
-  const userApiLimit = await prisma.userApiLimit.findUnique({ where: { userId } });
-
-  if (userApiLimit) {
-    await prisma.userApiLimit.update({
-      where: { userId },
-      data: { count: userApiLimit.count + 1 },
-    });
-  } else {
-    await prisma.userApiLimit.create({ data: { userId, count: 1 } });
-  }
+  await prisma.userApiLimit.upsert({
+    where: { userId },
+    create: { userId, count: 1 },
+    update: { count: { increment: 1 } },
+  });
 };
 
 export const checkApiLimit = async () => {
