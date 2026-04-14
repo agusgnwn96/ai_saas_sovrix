@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     const [width, height] = resolution.split("x").map(Number);
 
     const images = await Promise.all(
-      Array.from({ length: parseInt(amount) }).map(() =>
+      Array.from({ length: parseInt(amount, 10) }).map(() =>
         replicate.run("stability-ai/sdxl:39ed52f2a78e934b3ba6e2a89f5b1c712de7dfea535525255b1aa35c5565e08b", {
           input: { prompt, width, height, num_outputs: 1 },
         })
