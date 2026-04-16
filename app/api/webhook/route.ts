@@ -33,7 +33,7 @@ export async function POST(req: Request) {
         userId: session.metadata.userId,
         stripeSubscriptionId: subscription.id,
         stripeCustomerId: subscription.customer as string,
-        stripePriceId: subscription.items.data[0].price.id,
+        stripePriceId: subscription.items.data[0]?.price.id,
         stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
       },
     });
@@ -47,7 +47,7 @@ export async function POST(req: Request) {
     await prisma.userSubscription.update({
       where: { stripeSubscriptionId: subscription.id },
       data: {
-        stripePriceId: subscription.items.data[0].price.id,
+        stripePriceId: subscription.items.data[0]?.price.id,
         stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
       },
     });
