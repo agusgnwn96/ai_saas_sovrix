@@ -35,7 +35,9 @@ export async function POST(req: Request) {
 
     if (!isPro) await incrementApiLimit();
 
-    return NextResponse.json(response.content[0]);
+    const content = response.content[0];
+    if (!content) return new NextResponse("No content in response", { status: 500 });
+    return NextResponse.json(content);
   } catch (error) {
     console.error("[CODE_ERROR]", error);
     return new NextResponse("Internal error", { status: 500 });
