@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { cn } from "@/lib/utils";
+import { toast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   prompt: z.string().min(1, { message: "Prompt is required" }),
@@ -50,6 +51,7 @@ export default function CodePage() {
       form.reset();
     } catch (error: any) {
       if (error?.response?.status === 403) proModal.onOpen();
+      else toast({ description: "Something went wrong. Please try again.", variant: "destructive" });
     } finally {
       router.refresh();
     }
