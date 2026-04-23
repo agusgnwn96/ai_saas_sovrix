@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardFooter } from "@/components/ui/card";
+import { toast } from "@/hooks/use-toast";
 
 const amountOptions = [
   { value: "1", label: "1 Photo" },
@@ -64,6 +65,7 @@ export default function ImagePage() {
       form.reset();
     } catch (error: any) {
       if (error?.response?.status === 403) proModal.onOpen();
+      else toast({ description: "Something went wrong. Please try again.", variant: "destructive" });
     } finally {
       router.refresh();
     }
