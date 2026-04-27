@@ -49,11 +49,10 @@ export default function CodePage() {
         { role: "assistant", content: response.data.content },
       ]);
       form.reset();
+      router.refresh();
     } catch (error: any) {
       if (error?.response?.status === 403) proModal.onOpen();
       else toast({ description: "Something went wrong. Please try again.", variant: "destructive" });
-    } finally {
-      router.refresh();
     }
   };
 
