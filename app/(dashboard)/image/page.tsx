@@ -63,11 +63,10 @@ export default function ImagePage() {
       const urls = response.data.map((image: { url: string }) => image.url);
       setImages(urls);
       form.reset();
+      router.refresh();
     } catch (error: any) {
       if (error?.response?.status === 403) proModal.onOpen();
       else toast({ description: "Something went wrong. Please try again.", variant: "destructive" });
-    } finally {
-      router.refresh();
     }
   };
 
