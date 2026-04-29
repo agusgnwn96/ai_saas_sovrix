@@ -38,11 +38,10 @@ export default function MusicPage() {
       const response = await axios.post("/api/music", values);
       setMusic(response.data.audio);
       form.reset();
+      router.refresh();
     } catch (error: any) {
       if (error?.response?.status === 403) proModal.onOpen();
       else toast({ description: "Something went wrong. Please try again.", variant: "destructive" });
-    } finally {
-      router.refresh();
     }
   };
 
