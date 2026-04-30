@@ -38,11 +38,10 @@ export default function VideoPage() {
       const response = await axios.post("/api/video", values);
       setVideo(response.data[0]);
       form.reset();
+      router.refresh();
     } catch (error: any) {
       if (error?.response?.status === 403) proModal.onOpen();
       else toast({ description: "Something went wrong. Please try again.", variant: "destructive" });
-    } finally {
-      router.refresh();
     }
   };
 
