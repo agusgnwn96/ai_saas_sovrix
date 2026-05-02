@@ -24,6 +24,7 @@ const formSchema = z.object({
 });
 
 type Message = {
+  id: string;
   role: "user" | "assistant";
   content: string;
 };
@@ -42,7 +43,7 @@ export default function ConversationPage() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const userMessage: Message = { role: "user", content: values.prompt };
+      const userMessage: Message = { id: crypto.randomUUID(), role: "user", content: values.prompt };
       const newMessages = [...messages, userMessage];
 
       const response = await axios.post("/api/conversation", {
@@ -52,7 +53,7 @@ export default function ConversationPage() {
       setMessages((current) => [
         ...current,
         userMessage,
-        { role: "assistant", content: response.data.content },
+        { id: crypto.randomUUID(), role: "assistant", content: response.data.content },
       ]);
       form.reset();
       router.refresh();
@@ -117,9 +118,9 @@ export default function ConversationPage() {
             <Empty label="No conversation started." />
           )}
           <div className="flex flex-col-reverse gap-y-4">
-            {messages.map((message, i) => (
+            {messages.map((message) => (
               <div
-                key={i}
+                key={message.id}
                 className={cn(
                   "p-8 w-full flex items-start gap-x-8 rounded-lg",
                   message.role === "user"
