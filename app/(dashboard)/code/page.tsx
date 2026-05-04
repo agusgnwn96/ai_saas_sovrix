@@ -24,7 +24,7 @@ const formSchema = z.object({
   prompt: z.string().min(1, { message: "Prompt is required" }),
 });
 
-type Message = { role: "user" | "assistant"; content: string };
+type Message = { id: string; role: "user" | "assistant"; content: string };
 
 export default function CodePage() {
   const router = useRouter();
@@ -40,13 +40,13 @@ export default function CodePage() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const userMessage: Message = { role: "user", content: values.prompt };
+      const userMessage: Message = { id: crypto.randomUUID(), role: "user", content: values.prompt };
       const newMessages = [...messages, userMessage];
       const response = await axios.post("/api/code", { messages: newMessages });
       setMessages((current) => [
         ...current,
         userMessage,
-        { role: "assistant", content: response.data.content },
+        { id: crypto.randomUUID(), role: "assistant", content: response.data.content },
       ]);
       form.reset();
       router.refresh();
@@ -101,9 +101,9 @@ export default function CodePage() {
             <Empty label="No code generated." />
           )}
           <div className="flex flex-col-reverse gap-y-4">
-            {messages.map((message, i) => (
+            {messages.map((message) => (
               <div
-                key={i}
+                key={message.id}
                 className={cn(
                   "p-8 w-full flex items-start gap-x-8 rounded-lg",
                   message.role === "user"
