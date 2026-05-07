@@ -31,7 +31,8 @@ export function ProModal() {
       setLoading(true);
       const response = await axios.get("/api/stripe");
       window.location.href = response.data.url;
-    } catch {
+    } catch (error) {
+      console.error("[PRO_MODAL_ERROR]", error);
       toast({ description: "Something went wrong.", variant: "destructive" });
     } finally {
       setLoading(false);
