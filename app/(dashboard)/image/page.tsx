@@ -161,7 +161,7 @@ export default function ImagePage() {
           {images.map((src) => (
             <Card key={src} className="rounded-lg overflow-hidden">
               <div className="relative aspect-square">
-                <Image fill alt="Generated image" src={src} />
+                <Image fill alt="Generated image" src={src} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw" />
               </div>
               <CardFooter className="p-2">
                 <Button
